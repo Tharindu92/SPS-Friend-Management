@@ -1,0 +1,15 @@
+CREATE TABLE `friends`.`friendships` (
+  `iduser` INT NOT NULL,
+  `idfriend` INT NOT NULL,
+  INDEX `iduser_idx` (`iduser` ASC),
+  INDEX `idfriend_idx` (`idfriend` ASC),
+  CONSTRAINT `iduser`
+    FOREIGN KEY (`iduser`)
+    REFERENCES `friends`.`users` (`iduser`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `idfriend`
+    FOREIGN KEY (`idfriend`)
+    REFERENCES `friends`.`users` (`iduser`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
