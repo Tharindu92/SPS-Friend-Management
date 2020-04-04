@@ -13,3 +13,6 @@ CREATE TABLE `friends`.`friendships` (
     REFERENCES `friends`.`users` (`iduser`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
+
+
+select u.username from users as u where u.iduser in (select idfriend from users as u1, friendships as f where u1.username = 'rady@example.com' and u1.iduser = f.iduser)

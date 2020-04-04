@@ -23,13 +23,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer iduser;
 
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name = "friendships",
-            joinColumns = @JoinColumn(name = "iduser"),
-            inverseJoinColumns = @JoinColumn(name = "idfriend"))
-    private Set<User> friends = new HashSet<User>();;
+    @OneToMany(mappedBy = "user")
+//    @JoinTable(name = "friendships",
+//            joinColumns = @JoinColumn(name = "iduser"),
+//            inverseJoinColumns = @JoinColumn(name = "idfriend"))
+    private Set<Friendships> friends = new HashSet<Friendships>();;
 
-    @ManyToMany(mappedBy="friends")
-    private Set<User> friendOf = new HashSet<User>();;
+    @OneToMany(mappedBy="friend")
+    private Set<Friendships> friendOf = new HashSet<Friendships>();;
+
+    public User(String username) {
+        this.username = username;
+    }
 
 }
