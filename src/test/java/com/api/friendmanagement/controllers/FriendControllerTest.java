@@ -27,7 +27,7 @@ public class FriendControllerTest {
     private static final String username1 = randomString();
     private static final String username2 = randomString();
 
-    public static String randomString(){
+    private static String randomString(){
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 6;
@@ -41,17 +41,9 @@ public class FriendControllerTest {
         return generatedString;
     }
 
-//    @Test
-//    public void getHello() throws Exception {
-//
-//        ResponseEntity<String> response = restTemplate.getForEntity(new URL("http://localhost:" + port + "/").toString(), String.class);
-//
-//        assertEquals("Hello Controller", response.getBody());
-//
-//    }
     @Test
     @Order(1)
-    public void registerNewUsers() throws MalformedURLException {
+    private void registerNewUsers() throws MalformedURLException {
         Friends friends = new Friends();
         friends.setFriendsList(new ArrayList<>());
         friends.getFriendsList().add(username1 + "@example.com");
@@ -72,7 +64,7 @@ public class FriendControllerTest {
 
     @Test
     @Order(2)
-    public void addFriendship() throws MalformedURLException {
+    private void addFriendship() throws MalformedURLException {
         Friends friends = new Friends();
         friends.setFriendsList(new ArrayList<>());
         friends.getFriendsList().add(username1 + "@example.com");
@@ -86,7 +78,7 @@ public class FriendControllerTest {
 
     @Test
     @Order(3)
-    public  void getFriendsByUserName() throws MalformedURLException {
+    private  void getFriendsByUserName() throws MalformedURLException {
         Email email = new Email();
         email.setEmailId(username1+"@example.com");
         Message message = new Message();
@@ -99,7 +91,7 @@ public class FriendControllerTest {
 
     @Test
     @Order(4)
-    public void getCommonByUserNames() throws MalformedURLException {
+    private void getCommonByUserNames() throws MalformedURLException {
         Friends friends = new Friends();
         friends.setFriendsList(new ArrayList<>());
         friends.getFriendsList().add(username1 + "@example.com");
@@ -114,7 +106,7 @@ public class FriendControllerTest {
 
     @Test
     @Order(5)
-    public void addSubscription() throws MalformedURLException {
+    private void addSubscription() throws MalformedURLException {
         RequestModel requestModel = new RequestModel();
         requestModel.setRequestor(username1 + "@example.com");
         requestModel.setTarget(username2 + "@example.com");
@@ -127,7 +119,7 @@ public class FriendControllerTest {
 
     @Test
     @Order(6)
-    public void addBlock() throws MalformedURLException {
+    private void addBlock() throws MalformedURLException {
         RequestModel requestModel = new RequestModel();
         requestModel.setRequestor(username1 + "@example.com");
         requestModel.setTarget(username2 + "@example.com");
@@ -140,7 +132,7 @@ public class FriendControllerTest {
 
     @Test
     @Order(7)
-    public void getSubscribersByUserName() throws MalformedURLException {
+    private void getSubscribersByUserName() throws MalformedURLException {
         NotifyModel notifyModel = new NotifyModel();
         notifyModel.setSender(username1 + "@example.com");
         notifyModel.setText("Hello World! demo@example.com");
