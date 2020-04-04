@@ -1,4 +1,4 @@
-package com.api.friendmanagement.models;
+package com.api.friendmanagement.Models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotifyModel {
+public class RequestModel {
 
-    private String sender;
-    private String text;
+    private String requestor;
+    private String target;
 }

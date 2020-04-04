@@ -1,6 +1,6 @@
-package com.api.friendmanagement.Controllers;
+package com.api.friendmanagement.controllers;
 
-import com.api.friendmanagement.Models.*;
+import com.api.friendmanagement.models.*;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -54,34 +53,34 @@ public class FriendControllerTest {
     @Order(1)
     public void registerNewUsers() throws MalformedURLException {
         Friends friends = new Friends();
-        friends.setFriends(new ArrayList<String>());
-        friends.getFriends().add(username1 + "@example.com");
-        friends.getFriends().add(username2 + "@example.com");
+        friends.setFriendsList(new ArrayList<>());
+        friends.getFriendsList().add(username1 + "@example.com");
+        friends.getFriendsList().add(username2 + "@example.com");
 
         Message message = new Message();
-        message.setMessage("Requested to register 2 users. Success : 2 and Failed 0");
-        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friends/register").toString(),friends, Message.class);
+        message.setMessageText("Requested to register 2 users. Success : 2 and Failed 0");
+        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friendsList/register").toString(),friends, Message.class);
 
-        assertEquals(message.getMessage(), response.getBody().getMessage());
+        assertEquals(message.getMessageText(), response.getBody().getMessageText());
 
         message = new Message();
-        message.setMessage("Requested to register 2 users. Success : 0 and Failed 2");
-        response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friends/register").toString(),friends, Message.class);
+        message.setMessageText("Requested to register 2 users. Success : 0 and Failed 2");
+        response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friendsList/register").toString(),friends, Message.class);
 
-        assertEquals(message.getMessage(), response.getBody().getMessage());
+        assertEquals(message.getMessageText(), response.getBody().getMessageText());
     }
 
     @Test
     @Order(2)
     public void addFriendship() throws MalformedURLException {
         Friends friends = new Friends();
-        friends.setFriends(new ArrayList<String>());
-        friends.getFriends().add(username1 + "@example.com");
-        friends.getFriends().add(username2 + "@example.com");
+        friends.setFriendsList(new ArrayList<>());
+        friends.getFriendsList().add(username1 + "@example.com");
+        friends.getFriendsList().add(username2 + "@example.com");
 
         Message message = new Message();
         message.setSuccess(true);
-        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friends/add").toString(),friends, Message.class);
+        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friendsList/add").toString(),friends, Message.class);
         assertEquals(message.isSuccess(), response.getBody().isSuccess());
     }
 
@@ -89,11 +88,11 @@ public class FriendControllerTest {
     @Order(3)
     public  void getFriendsByUserName() throws MalformedURLException {
         Email email = new Email();
-        email.setEmail(username1+"@example.com");
+        email.setEmailId(username1+"@example.com");
         Message message = new Message();
-        message.setFriends(new ArrayList<String>());
+        message.setFriends(new ArrayList<>());
         message.getFriends().add(username2+"@example.com");
-        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friends/list").toString(),email, Message.class);
+        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friendsList/list").toString(),email, Message.class);
 
         assertEquals(message.getFriends().get(0), response.getBody().getFriends().get(0));
     }
@@ -102,13 +101,13 @@ public class FriendControllerTest {
     @Order(4)
     public void getCommonByUserNames() throws MalformedURLException {
         Friends friends = new Friends();
-        friends.setFriends(new ArrayList<String>());
-        friends.getFriends().add(username1 + "@example.com");
-        friends.getFriends().add(username2 + "@example.com");
+        friends.setFriendsList(new ArrayList<>());
+        friends.getFriendsList().add(username1 + "@example.com");
+        friends.getFriendsList().add(username2 + "@example.com");
 
         Message message = new Message();
         message.setSuccess(true);
-        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friends/common").toString(),friends, Message.class);
+        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friendsList/common").toString(),friends, Message.class);
         assertEquals(message.isSuccess(), response.getBody().isSuccess());
 
     }
@@ -122,7 +121,7 @@ public class FriendControllerTest {
 
         Message message = new Message();
         message.setSuccess(true);
-        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friends/subscribe").toString(),requestModel, Message.class);
+        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friendsList/subscribe").toString(),requestModel, Message.class);
         assertEquals(message.isSuccess(), response.getBody().isSuccess());
     }
 
@@ -135,7 +134,7 @@ public class FriendControllerTest {
 
         Message message = new Message();
         message.setSuccess(true);
-        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friends/block").toString(),requestModel, Message.class);
+        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friendsList/block").toString(),requestModel, Message.class);
         assertEquals(message.isSuccess(), response.getBody().isSuccess());
     }
 
@@ -148,7 +147,7 @@ public class FriendControllerTest {
 
         Message message = new Message();
         message.setSuccess(true);
-        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friends/notify").toString(),notifyModel, Message.class);
+        ResponseEntity<Message> response = restTemplate.postForEntity(new URL("http://localhost:"+port+"/friendsList/notify").toString(),notifyModel, Message.class);
         assertEquals(message.isSuccess(), response.getBody().isSuccess());
     }
 }

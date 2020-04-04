@@ -1,11 +1,10 @@
-package com.api.friendmanagement.Services;
+package com.api.friendmanagement.services;
 
-import com.api.friendmanagement.Exceptions.UserBlockedException;
-import com.api.friendmanagement.Models.Friends;
-import com.api.friendmanagement.Models.Friendships;
-import com.api.friendmanagement.Models.Message;
-import com.api.friendmanagement.Models.User;
-import com.api.friendmanagement.Repositories.FriendshipRepo;
+import com.api.friendmanagement.exceptions.UserBlockedException;
+import com.api.friendmanagement.models.Friendships;
+import com.api.friendmanagement.models.Message;
+import com.api.friendmanagement.models.User;
+import com.api.friendmanagement.repositories.FriendshipRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

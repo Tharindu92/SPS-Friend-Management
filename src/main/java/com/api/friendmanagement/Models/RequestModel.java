@@ -1,4 +1,4 @@
-package com.api.friendmanagement.Models;
+package com.api.friendmanagement.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

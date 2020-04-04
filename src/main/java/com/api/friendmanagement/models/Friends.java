@@ -1,6 +1,5 @@
-package com.api.friendmanagement.models;
+package com.api.friendmanagement.Models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class Friends {
 
-    @JsonProperty("friends")
-    private List<String> friendsList;
+    private List<String> friends;
 }

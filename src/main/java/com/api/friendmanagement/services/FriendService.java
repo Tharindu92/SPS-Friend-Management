@@ -1,8 +1,8 @@
-package com.api.friendmanagement.Services;
+package com.api.friendmanagement.services;
 
-import com.api.friendmanagement.Exceptions.UserNotExistsException;
-import com.api.friendmanagement.Models.*;
-import com.api.friendmanagement.Repositories.FriendRepo;
+import com.api.friendmanagement.exceptions.UserNotExistsException;
+import com.api.friendmanagement.models.*;
+import com.api.friendmanagement.repositories.FriendRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class FriendService {
     public Message addFriends(Friends friends) {
         int registered = 0;
         int failed = 0;
-        for(String username : friends.getFriends()){
+        for(String username : friends.getFriendsList()){
             List<User> userList1 = friendRepo.findUserByUsername(username);
             if(userList1.isEmpty()) {
                 friendRepo.save(new User(username));
@@ -31,14 +31,14 @@ public class FriendService {
         }
         Message message = new Message();
         message.setSuccess(true);
-        message.setMessage("Requested to register "+ (registered+failed) +" users. Success : "+registered + " and Failed "+ failed);
+        message.setMessageText("Requested to register "+ (registered+failed) +" users. Success : "+registered + " and Failed "+ failed);
         return message;
     }
 
     public Message getFriendsByUserName(Email email) {
         Message message = new Message();
         List<String> friendNames = new ArrayList<>();
-        List<User> friends = friendRepo.findFriendsByUsername(email.getEmail());
+        List<User> friends = friendRepo.findFriendsByUsername(email.getEmailId());
         for(User friend : friends){
             friendNames.add(friend.getUsername());
         }
@@ -53,7 +53,7 @@ public class FriendService {
     public Message getCommonByUserNames(Friends friends) {
         Message message = new Message();
         List<String> friendNames = new ArrayList<>();
-        List<User> friendsList = friendRepo.findCommonByUsernames(friends.getFriends().get(0), friends.getFriends().get(1));
+        List<User> friendsList = friendRepo.findCommonByUsernames(friends.getFriendsList().get(0), friends.getFriendsList().get(1));
         for(User friend : friendsList){
             friendNames.add(friend.getUsername());
         }
@@ -92,7 +92,7 @@ public class FriendService {
     }
 
     public List<String> extractUsersFromText(String text){
-        List<String> extractUsers = new ArrayList<String>();
+        List<String> extractUsers = new ArrayList<>();
         String[] words = text.split(" ");
         for(String word: words){
             if(word.contains("@") && word.endsWith(".com")){

@@ -1,4 +1,4 @@
-package com.api.friendmanagement.Exceptions;
+package com.api.friendmanagement.exceptions;
 
 public class UserAlreadyExistsException extends Exception {
     public UserAlreadyExistsException(String errorMessage) {

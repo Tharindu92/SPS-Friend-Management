@@ -1,4 +1,4 @@
-package com.api.friendmanagement.models;
+package com.api.friendmanagement.Models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,12 +6,16 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "USERS")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = {"friends","friendOf"})
 public class User {
     @Column(nullable = false, unique = true)
     private String username;
@@ -23,7 +27,7 @@ public class User {
 ////    @JoinTable(name = "friendships",
 ////            joinColumns = @JoinColumn(name = "iduser"),
 ////            inverseJoinColumns = @JoinColumn(name = "idfriend"))
-//    private Set<Friendships> friendsList = new HashSet<Friendships>();;
+//    private Set<Friendships> friends = new HashSet<Friendships>();;
 
 //    @OneToMany(mappedBy="friend")
 //    private Set<Friendships> friendOf = new HashSet<Friendships>();;

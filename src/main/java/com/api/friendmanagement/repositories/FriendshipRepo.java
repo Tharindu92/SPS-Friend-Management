@@ -1,6 +1,6 @@
-package com.api.friendmanagement.Repositories;
+package com.api.friendmanagement.repositories;
 
-import com.api.friendmanagement.Models.Friendships;
+import com.api.friendmanagement.models.Friendships;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

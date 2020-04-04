@@ -1,7 +1,8 @@
-package com.api.friendmanagement.models;
+package com.api.friendmanagement.Models;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 

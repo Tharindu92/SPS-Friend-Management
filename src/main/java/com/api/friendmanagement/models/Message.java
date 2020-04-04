@@ -1,4 +1,4 @@
-package com.api.friendmanagement.Models;
+package com.api.friendmanagement.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,7 +21,8 @@ public class Message {
 
     private int count;
 
-    private String message;
+    @JsonProperty("message")
+    private String messageText;
 
     private List<String> recipients;
 }
