@@ -1,0 +1,156 @@
+info:
+  title: "SPS Friend Management"
+  version: "1.0"
+openapi: 3.0.1
+paths:
+  /friends/common:
+    get:
+      operationId: getCommonByUserNames
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Friends'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+  /friends/subscribe:
+    post:
+      operationId: addSubscription
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestModel'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+  /friends/register:
+    post:
+      operationId: addFriends
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Friends'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+  /friends/add:
+    post:
+      operationId: addFriendships
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Friends'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+  /friends/block:
+    put:
+      operationId: addBlock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestModel'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+  /friends/notify:
+    get:
+      operationId: addBlock_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotifyModel'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+  /friends/list:
+    get:
+      operationId: getFriendsByUserName
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Email'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        friends:
+          type: array
+          items:
+            type: string
+        count:
+          type: integer
+          format: int32
+        message:
+          type: string
+        recipients:
+          type: array
+          items:
+            type: string
+        success:
+          type: boolean
+    Friends:
+      type: object
+      properties:
+        friends:
+          type: array
+          items:
+            type: string
+    RequestModel:
+      type: object
+      properties:
+        requestor:
+          type: string
+        target:
+          type: string
+    NotifyModel:
+      type: object
+      properties:
+        sender:
+          type: string
+        text:
+          type: string
+    Email:
+      type: object
+      properties:
+        email:
+          type: string

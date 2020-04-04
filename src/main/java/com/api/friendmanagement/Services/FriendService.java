@@ -1,10 +1,6 @@
 package com.api.friendmanagement.Services;
 
-//import com.microservices.signin.Repositories.UserRepo;
-//import com.microservices.signin.Models.Message;
-//import com.microservices.signin.Models.User;
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
+import com.api.friendmanagement.Exceptions.UserNotExistsException;
 import com.api.friendmanagement.Models.*;
 import com.api.friendmanagement.Repositories.FriendRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,47 +17,21 @@ public class FriendService {
     @Autowired
     private FriendRepo friendRepo;
 
-//    private static final Logger LOGGER= LogManager.getLogger(UserAuthService.class);
-
-    public Message addFriends(Friends friends){
-        List<User> userList1 = friendRepo.findUserByUsername(friends.getFriends().get(0));
-        List<User> userList2= friendRepo.findUserByUsername(friends.getFriends().get(1));
-        //System.out.println(user1 + "     "+ user2);
-        User user1, user2;
-        if(userList1.size() == 0)
-            user1 = new User(friends.getFriends().get(0));
-        else
-            user1 = userList1.get(0);
-        if(userList2.size() == 0)
-            user2 = new User(friends.getFriends().get(1));
-        else
-            user2 = userList2.get(0);
-
-        Friendships friendships = new Friendships();
-        friendships.setUser(user1);
-        friendships.setFriend(user2);
-        friendships.setBlocked(false);
-
-        user1.getFriends().add(friendships);
-
-        Friendships friendships2 = new Friendships();
-        friendships2.setUser(user2);
-        friendships2.setFriend(user1);
-        friendships2.setBlocked(false);
-
-        user1.getFriends().add(friendships);
-        user1.getFriendOf().add(friendships2);
-        user2.getFriendOf().add(friendships2);
-        user2.getFriends().add(friendships);
-
-
-
-        friendRepo.save(user1);
-        friendRepo.save(user2);
-
-//        blockFriendbyUsername(user1.getUsername(), user2.getUsername());
+    public Message addFriends(Friends friends) {
+        int registered = 0;
+        int failed = 0;
+        for(String username : friends.getFriends()){
+            List<User> userList1 = friendRepo.findUserByUsername(username);
+            if(userList1.isEmpty()) {
+                friendRepo.save(new User(username));
+                registered++;
+            }else{
+                failed++;
+            }
+        }
         Message message = new Message();
         message.setSuccess(true);
+        message.setMessage("Requested to register "+ (registered+failed) +" users. Success : "+registered + " and Failed "+ failed);
         return message;
     }
 
@@ -80,28 +50,57 @@ public class FriendService {
         return message;
     }
 
-    public Message blockFriendbyUsername(String request, String target){
+    public Message getCommonByUserNames(Friends friends) {
         Message message = new Message();
+        List<String> friendNames = new ArrayList<>();
+        List<User> friendsList = friendRepo.findCommonByUsernames(friends.getFriends().get(0), friends.getFriends().get(1));
+        for(User friend : friendsList){
+            friendNames.add(friend.getUsername());
+        }
+        message.setSuccess(true);
 
-        User requestUser = friendRepo.findUserByUsername(request).get(0);
-        User targetUser = friendRepo.findUserByUsername(target).get(0);
-
-        Friendships friendships = new Friendships();
-        friendships.setUser(requestUser);
-        friendships.setFriend(targetUser);
-        friendships.setBlocked(true);
-
-        requestUser.getFriends().add(friendships);
-
-        friendRepo.save(requestUser);
+        message.setFriends(friendNames);
+        message.setCount(message.getFriends().size());
 
         return message;
     }
 
-//    public List<User> getAllUsers(){
-////        LOGGER.info("AWA");
-////        LOGGER.info(String.valueOf(userRepo.findAll().size()));
-//        return userRepo.findAll();
-//    }
+    public Message getSubscribersByUserName(NotifyModel notifyModel) throws UserNotExistsException {
+        Message message = new Message();
+        getUserByUserName(notifyModel.getSender());
+
+        List<User> recipients = friendRepo.findSubscribersByUsername(notifyModel.getSender());
+        List<String> recipientsName = extractUsersFromText(notifyModel.getText());
+
+        for(User recipient : recipients){
+            recipientsName.add(recipient.getUsername());
+        }
+
+        message.setSuccess(true);
+        message.setRecipients(recipientsName);
+
+        return message;
+    }
+
+    public User getUserByUserName(String username) throws UserNotExistsException {
+
+        List<User> user = friendRepo.findUserByUsername(username);
+        if(user.isEmpty())
+            throw new UserNotExistsException("One of requestor or target is not registered");
+
+        return friendRepo.findUserByUsername(username).get(0);
+    }
+
+    public List<String> extractUsersFromText(String text){
+        List<String> extractUsers = new ArrayList<String>();
+        String[] words = text.split(" ");
+        for(String word: words){
+            if(word.contains("@") && word.endsWith(".com")){
+                extractUsers.add(word);
+            }
+        }
+        return extractUsers;
+    }
+
 
 }

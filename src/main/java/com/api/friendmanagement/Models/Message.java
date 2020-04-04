@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class Message {
 
     @JsonProperty("success")
@@ -21,4 +21,7 @@ public class Message {
 
     private int count;
 
+    private String message;
+
+    private List<String> recipients;
 }

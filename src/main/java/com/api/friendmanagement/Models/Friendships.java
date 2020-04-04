@@ -5,24 +5,30 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "FRIENDSHIPS")
 @Data
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class Friendships {
-    @EmbeddedId
-    private Friendshipkey id;
+//    @EmbeddedId
+//    private Friendshipkey id;
 
-    @ManyToOne
-    @MapsId("iduser")
-    @JoinColumn(name = "iduser")
-    private User user;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idfriendship;
 
-    @ManyToOne
-    @MapsId("iduser")
-    @JoinColumn(name = "idfriend")
-    private User friend;
+
+//    @ManyToOne
+//    @MapsId("iduser")
+//    @JoinColumn(name = "iduser")
+    private Integer iduser;
+
+//    @ManyToOne
+//    @MapsId("iduser")
+//    @JoinColumn(name = "idfriend")
+    private Integer idfriend;
 
     @Column(columnDefinition = "BIT default 0")
     private boolean blocked;

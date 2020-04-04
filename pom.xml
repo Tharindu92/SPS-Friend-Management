@@ -54,6 +54,16 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+            <version>2.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -61,6 +71,28 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <resourcePackages>
+                        <package>com.api.friendmanagement.Controllers</package>
+                    </resourcePackages>
+                    <outputPath>${project.build.directory}</outputPath>
+                    <outputFileName>swagger</outputFileName>
+                    <outputFormat>JSONANDYAML</outputFormat>
+                    <prettyPrint>true</prettyPrint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>resolve</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
