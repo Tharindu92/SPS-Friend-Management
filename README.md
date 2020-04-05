@@ -2,6 +2,15 @@
 
 SPS Friend Management System is a list of exposed REST services to manage friendship between users.
 
+## Before Testing
+
+Before testing the requested APIs you need to register emails(users) to the system. For that need to call following api. Can register any number of users at once. 
+
+```
+url: https://friends-wre35pereq-de.a.run.app/friends/register
+request boday: { "friends": [ "testuser1@example.com", "testuser2@example.com", "testuser3@example.com"] }
+```
+
 ## Accessing the Product
 
 Exposed APIs
