@@ -201,29 +201,16 @@ For unit testing used following dependencies
 To deploy the product used the Cloud Run service provided by GCP.
 To deploy into Cloud Run need to create a docker image. So for that need to have a Dockerfile. The docker file is as follows.
 ```dockerfile
-# Use the official maven/Java 8 image to create a build artifact.
-# https://hub.docker.com/_/maven
-FROM maven:3.5-jdk-8-alpine as builder
-
+FROM gizmotronic/oracle-java
 # Copy local code to the container image.
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-
-# Build a release artifact.
-RUN mvn package -DskipTests
-
-# Use AdoptOpenJDK for base image.
-# It's important to use OpenJDK 8u191 or above that has container support enabled.
-# https://hub.docker.com/r/adoptopenjdk/openjdk8
-# https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
-FROM adoptopenjdk/openjdk8:jdk8u202-b08-alpine-slim
-
-# Copy the jar to the production image from the builder stage.
-COPY --from=builder /app/target/friend-management-*.jar /friend-management.jar
+COPY friend-management-0.0.1-SNAPSHOT.jar /friend-management.jar
 
 # Run the web service on container startup.
 CMD ["java","-Djava.security.egd=file:/dev/./urandom","-Dserver.port=${PORT}","-jar","/friend-management.jar"]
+
+
+
 ``` 
 To deploy the product to Cloud Run need to install Google Cloud SDK and configure to the project. 
 
