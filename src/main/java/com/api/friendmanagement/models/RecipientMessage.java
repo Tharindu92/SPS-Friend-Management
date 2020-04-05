@@ -9,20 +9,19 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class Message {
-
-    @JsonProperty("success")
-    private boolean success;
-
-    private List<String> friends;
-
-    private int count;
-
-    @JsonProperty("message")
-    private String messageText;
+public class RecipientMessage extends AbstractMessage {
 
     private List<String> recipients;
+
+    public RecipientMessage(boolean success, List<String> recipients) {
+        this.recipients = recipients;
+        this.setSuccess(success);
+    }
+
+    public RecipientMessage(boolean success) {
+        this.setSuccess(success);
+    }
 }

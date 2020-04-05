@@ -18,4 +18,7 @@ public interface FriendRepo extends JpaRepository<User, Integer> {
 
     @Query(value = "select * from users as u where u.iduser in (select f.iduser from users as u2, friendships as f where u2.username = ?1 and u2.iduser = f.idfriend and f.blocked = FALSE )", nativeQuery = true)
     List<User> findSubscribersByUsername(String username);
+
+    @Query(value = "select exists (select * from users where iduser in (select f.iduser from users as u, friendships as f  where u.iduser = f.idfriend and u.username = ?1 and blocked = TRUE) and username = ?2)", nativeQuery = true)
+    Integer isUserBlocked(String block, String blockedBy);
 }

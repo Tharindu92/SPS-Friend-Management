@@ -5,7 +5,7 @@ openapi: 3.0.1
 paths:
   /friends/common:
     get:
-      operationId: getCommonByUserNames
+      operationId: getCommonFriends
       requestBody:
         content:
           application/json:
@@ -17,7 +17,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Message'
+                $ref: '#/components/schemas/GeneralMessage'
   /friends/subscribe:
     post:
       operationId: addSubscription
@@ -32,7 +32,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Message'
+                $ref: '#/components/schemas/GeneralMessage'
   /friends/register:
     post:
       operationId: addFriends
@@ -47,7 +47,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Message'
+                $ref: '#/components/schemas/GeneralMessage'
   /friends/add:
     post:
       operationId: addFriendships
@@ -62,7 +62,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Message'
+                $ref: '#/components/schemas/GeneralMessage'
   /friends/block:
     put:
       operationId: addBlock
@@ -77,7 +77,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Message'
+                $ref: '#/components/schemas/GeneralMessage'
   /friends/notify:
     get:
       operationId: addBlock_1
@@ -92,10 +92,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Message'
+                $ref: '#/components/schemas/GeneralMessage'
   /friends/list:
     get:
-      operationId: getFriendsByUserName
+      operationId: getFriendsByEmail
       requestBody:
         content:
           application/json:
@@ -107,7 +107,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Message'
+                $ref: '#/components/schemas/GeneralMessage'
 components:
   schemas:
     Message:
@@ -138,7 +138,7 @@ components:
     RequestModel:
       type: object
       properties:
-        requestor:
+        requester:
           type: string
         target:
           type: string

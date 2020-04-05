@@ -1,5 +1,6 @@
 package com.api.friendmanagement.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestModel {
 
-    private String requestor;
+    @JsonProperty(value = "requestor")
+    private String requester;
     private String target;
 }

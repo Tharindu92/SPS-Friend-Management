@@ -2,12 +2,13 @@ package com.api.friendmanagement.services;
 
 import com.api.friendmanagement.exceptions.UserBlockedException;
 import com.api.friendmanagement.models.Friendships;
-import com.api.friendmanagement.models.Message;
+import com.api.friendmanagement.models.GeneralMessage;
 import com.api.friendmanagement.models.User;
 import com.api.friendmanagement.repositories.FriendshipRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,45 +17,43 @@ public class FriendshipService {
     @Autowired
     FriendshipRepo friendshipRepo;
 
-    public Message addFriendship(User user1, User user2) throws UserBlockedException {
+    public GeneralMessage addFriendship(User friend, User friendwith) throws UserBlockedException {
 
-        Friendships friendships1 = setValues(user1.getIduser(), user2.getIduser());
-        Friendships friendships2 = setValues(user2.getIduser(), user1.getIduser());
+        Friendships friendships = setValues(friend.getIduser(), friendwith.getIduser());
+        Friendships friendshipsWith = setValues(friendwith.getIduser(), friend.getIduser());
 
-        if(friendships1.isBlocked() || friendships2.isBlocked())
-            throw new UserBlockedException("Trying to be friend with blocked user");
+        if(friendships.isBlocked()){
+            throw new UserBlockedException(friend.getUsername(), friendwith.getUsername());
+        }else if(friendshipsWith.isBlocked()){
+            throw new UserBlockedException(friendwith.getUsername(), friend.getUsername());
+        }
 
-        friendshipRepo.save(friendships2);
-        friendshipRepo.save(friendships1);
+        List<Friendships> friendshipsList = new ArrayList<>(2);
+        friendshipsList.add(friendships);
+        friendshipsList.add(friendshipsWith);
+        friendshipRepo.saveAll(friendshipsList);
 
-        Message message = new Message();
-        message.setSuccess(true);
-        return message;
+        return new GeneralMessage(true);
     }
 
-    public Message addSubscription(User requestor, User target) throws UserBlockedException {
+    public GeneralMessage addSubscription(User requester, User target) throws UserBlockedException {
 
-        Friendships friendships = setValues(requestor.getIduser(), target.getIduser());
+        Friendships friendships = setValues(requester.getIduser(), target.getIduser());
 
         if(friendships.isBlocked())
-            throw new UserBlockedException("Trying to subscribe with blocked user");
+            throw new UserBlockedException(target.getUsername(), requester.getUsername());
 
         friendshipRepo.save(friendships);
-
-        Message message = new Message();
-        message.setSuccess(true);
-        return message;
+        return new GeneralMessage(true);
     }
 
-    public Message addBlock(User requestor, User target){
+    public GeneralMessage addBlock(User requester, User target){
 
-        Friendships friendships = setValues(requestor.getIduser(), target.getIduser());
+        Friendships friendships = setValues(requester.getIduser(), target.getIduser());
         friendships.setBlocked(true);
         friendshipRepo.save(friendships);
 
-        Message message = new Message();
-        message.setSuccess(true);
-        return message;
+        return new GeneralMessage(true);
     }
 
     private Friendships setValues(Integer id1, Integer id2){
