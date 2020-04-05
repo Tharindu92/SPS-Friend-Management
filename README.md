@@ -7,7 +7,7 @@ SPS Friend Management System is a list of exposed REST services to manage friend
 Before testing the requested APIs you need to register emails(users) to the system. For that need to call following api. Can register any number of users at once. 
 
 ```
-url: https://friends-wre35pereq-de.a.run.app/friends/register
+url: https://friend-wre35pereq-de.a.run.app/friends/register
 request boday: { "friends": [ "testuser1@example.com", "testuser2@example.com", "testuser3@example.com"] }
 ```
 
@@ -15,14 +15,14 @@ request boday: { "friends": [ "testuser1@example.com", "testuser2@example.com", 
 
 Exposed APIs
 ```
-1. https://friends-wre35pereq-de.a.run.app/friends/add
-2. https://friends-wre35pereq-de.a.run.app/friends/list
-3. https://friends-wre35pereq-de.a.run.app/friends/common
-4. https://friends-wre35pereq-de.a.run.app/friends/subscribe
-5. https://friends-wre35pereq-de.a.run.app/friends/block
-6. https://friends-wre35pereq-de.a.run.app/friends/notify
+1. https://friend-wre35pereq-de.a.run.app/friends/add
+2. https://friend-wre35pereq-de.a.run.app/friends/list
+3. https://friend-wre35pereq-de.a.run.app/friends/common
+4. https://friend-wre35pereq-de.a.run.app/friends/subscribe
+5. https://friend-wre35pereq-de.a.run.app/friends/block
+6. https://friend-wre35pereq-de.a.run.app/friends/notify
 ```
-To access the swagger documentation go to [https://friends-wre35pereq-de.a.run.app/swagger-ui.html](https://friends-wre35pereq-de.a.run.app/swagger-ui.html)
+To access the swagger documentation go to [https://friend-wre35pereq-de.a.run.app/swagger-ui.html](https://friends-wre35pereq-de.a.run.app/swagger-ui.html)
 
 ## Database Setup
 
